@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user profile information and settings.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique Firebase Auth UID." },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastAssessmentDate": { "type": "string", "format": "date-time" },
+        "language": { "type": "string", "enum": ["en", "ur", "pa"], "description": "Preferred language." },
+        "streak": { "type": "integer", "description": "Current daily assessment streak." },
+        "badges": { "type": "array", "items": { "type": "string" }, "description": "Earned badges." }
+      },
+      "required": ["uid", "email"]
+    },
+    "Assessment": {
+      "title": "Voice Assessment",
+      "description": "Stores the results of a daily voice assessment.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user." },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "transcript": { "type": "string" },
+        "memoryQuestion": { "type": "string" },
+        "memoryAnswer": { "type": "string" },
+        "analysis": {
+          "type": "object",
+          "properties": {
+            "pitchVariation": { "type": "number" },
+            "toneStability": { "type": "number" },
+            "pauseFrequency": { "type": "number" },
+            "fluency": { "type": "number" },
+            "recallScore": { "type": "number" },
+            "overallCognitiveScore": { "type": "number" },
+            "summary": { "type": "string" }
+          }
+        }
+      },
+      "required": ["userId", "timestamp", "analysis"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual user profiles."
+    },
+    "/assessments/{assessmentId}": {
+      "schema": "Assessment",
+      "description": "Daily voice assessments for all users."
+    }
+  }
+}

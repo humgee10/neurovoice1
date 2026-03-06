@@ -1,0 +1,5 @@
+{
+  "name": "NeuroVoice",
+  "description": "NeuroVoice is a mobile health application designed to help detect early signs of cognitive decline by analyzing a user’s speech patterns over time.",
+  "requestFramePermissions": ["microphone"]
+}
